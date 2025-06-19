@@ -206,11 +206,13 @@ def submit_participation():
             score += 1
         
         # Get correct answer position (1-4)
-        correct_answer_position = conn.execute('''
-            SELECT ROW_NUMBER() OVER (ORDER BY id) as position
-            FROM answers 
-            WHERE question_id = ? AND id = ?
-        ''', (question['id'], correct_answer_id)).fetchone()['position']
+        all_answers = conn.execute('''
+            SELECT id FROM answers 
+            WHERE question_id = ?
+            ORDER BY id
+        ''', (question['id'],)).fetchall()
+        
+        correct_answer_position = next((i + 1 for i, ans in enumerate(all_answers) if ans['id'] == correct_answer_id), 1)
         
         answers_summaries.append({
             'correctAnswerPosition': correct_answer_position,
