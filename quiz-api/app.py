@@ -11,7 +11,7 @@ app = Flask(__name__)
 CORS(app)
 
 DATABASE = 'quiz.db'
-ADMIN_PASSWORD_HASH = "098f6bcd4621d373cade4e832627b4f6"  # MD5 hash of "test"
+ADMIN_PASSWORD_HASH = "d278077bbfe7285a144d4b5b11adb9cf"  # MD5 hash of "test"
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
